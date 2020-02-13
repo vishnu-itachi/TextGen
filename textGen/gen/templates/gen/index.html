@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>abos_demo</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<style>
+    .male {
+        background-color: rgba(129, 184, 235, 0.8);
+    }
+
+    #pageTitle {
+        text-shadow: 3px 3px 3px floralwhite;
+    }
+
+    .female {
+        background-color: rgba(178, 241, 178, 0.8);
+    }
+
+    #bdy {
+        background: url('/static/gen/images/bg.jpg');
+        background-repeat: no-repeat !important;
+        background-size: cover !important;
+    }
+
+    .op {
+        background: #ccc;
+        position: relative;
+    }
+
+    .legend {
+        border: solid 2px #000;
+        width: min-content;
+        padding: 0.5em;
+    }
+
+    .male_l {
+        color: black;
+        width: 100%;
+        margin-left: 0.5;
+        background-color: rgba(129, 184, 235, 1);
+    }
+
+    .female_l {
+        width: 100%;
+        color: black;
+        margin-left: 0.5;
+        background-color: rgba(178, 241, 178, 1);
+    }
+</style>
+
+<body id="bdy">
+    <div class="container textpart text-center">
+        <br>
+        <!-- <h1 id="pageTitle">abos demo</h1> -->
+        <br>
+        <form action="" method="get" oninput="lenvalue.value = len.valueAsNumber,pervalue.value= perlen.valueAsNumber"
+            onreset="resetvalue()">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-3">
+                    <h2></h2>
+                </div>
+                <div class="col-6">
+                    <h2></h2>
+                </div>
+                <div class="col-3">
+                    <h2></h2>
+                </div>
+            </div>
+            <div class="row text-center">
+                <div class="col-lg-3 p-4 bg-light text-left">
+                    <h3>Places</h3>
+                    <input type="radio" name="wonder" class="wonders" value="Taj" required> Taj Mahal<br>
+                    <input type="radio" name="wonder" class="wonders" value="MachuPicchu" required> Machu Picchu<br>
+                    <input type="radio" name="wonder" class="wonders" value="GreatWall" required> Great Wall
+                    of China <br>
+                    <input type="radio" name="wonder" class="wonders" value="Christ" required> Christ the
+                    Redeemer<br>
+                    <input type="radio" name="wonder" class="wonders" value="Colosseum" required> Colosseum<br>
+                    <input type="radio" name="wonder" class="wonders" value="Itza" required> Chichen Itza <br>
+                    <input type="radio" name="wonder" class="wonders" value="Petra" required> Petra <br>
+                </div>
+                <div class="col-lg-6 p-4 bg-dark text-light">
+                    <h3>Desired length of summary (in words)</h3>
+                    <input type="range" id="text-range" class="w-50 mt-4" name="len" min="50" max="300" value="200"
+                        step="50">
+                    <br>
+                    <output name="lenvalue" id="tex_len" for="len">200</output><br>
+                    <h3>Percentage of male comments</h3>
+                    <input type="range" class="w-50 mt-4" id="percent" name="perlen" min="1" max="100" value="50"> <br>
+                    <output name="pervalue" id="pervalue" for="perlen">50</output>
+
+                </div>
+                <div class="col-lg-3 p-4 bg-light text-left">
+                    <h2>Aspects</h2>
+                    <input type="checkbox" name="aspect" value="attractions"> Attractions<br>
+                    <input type="checkbox" name="aspect" value="access"> Access<br>
+                    <input type="checkbox" name="aspect" value="activities"> Activities<br>
+                    <input type="checkbox" name="aspect" value="amenities"> Amenities<br>
+                    <input type="checkbox" name="aspect" value="culture"> Culture<br>
+                    <input type="checkbox" name="aspect" value="cost"> Cost<br>
+                    <input type="checkbox" name="aspect" value="problem"> Problem<br>
+                    <input type="checkbox" onClick="toggle(this)" /> Select All<br />
+
+                </div>
+            </div>
+            <br>
+            <br>
+            <input type="reset" value="Reset" class="btn btn-warning">
+            <input type="submit" value="Submit" class="btn btn-success">
+            <br>
+            <br>
+
+        </form>
+
+        {% if paragraph %}
+        <div class="w-100 legend-box">
+            <div class="legend ml-auto bg-light">
+                <h5>Legend</h5>
+                <div class="male_l">Male</div>
+                <div class="female_l">Female</div>
+            </div>
+        </div>
+        <div style="height: 20em; overflow-y: scroll;" class="op p-4 text-left">
+            <p>{{ paragraph|safe }}
+            </p>
+        </div>
+        {% endif %}
+        <br>
+        <br>
+        <br>
+    </div>
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+
+
+<script>
+
+    function resetvalue() {
+        $('#tex_len').html('200');
+        $('#pervalue').html('50');
+        $('#bdy').css('background', 'url("/static/gen/images/bg.jpg")');
+        $($('#pageTitle').text('Abos Demo'));
+        $('.op').remove();
+        $('.legend-box').remove();
+        localStorage.removeItem('bgImg');
+    }
+
+    let aspect_list = [];
+
+    // console.log({{ percentage }});
+    // console.log({{ Text_len }});
+
+
+    aspect_list = {{ aspect_list | safe }};
+    percentage = {{ percentage }};
+    Text_len = {{ Text_len }};
+
+
+
+    $(':checkbox').each((ele) => {
+        if (aspect_list.includes($(':checkbox')[ele].value)) {
+            console.log($(':checkbox')[ele].value)
+            $(':checkbox')[ele].checked = true;
+        }
+    })
+
+
+    $('#percent').val(percentage);
+    $('#text-range').val(Text_len);
+    $('#tex_len').html(Text_len);
+    $('#pervalue').html(percentage);
+
+    images = {
+        'Taj': '/static/gen/images/Taj.jpg',
+        'MachuPicchu': '/static/gen/images/MachuPicchu.jpg',
+        'GreatWall': '/static/gen/images/The-Great-Wall-of-China.jpg',
+        'Christ': '/static/gen/images/Christ-the-Redeemer.jpg',
+        'Colosseum': '/static/gen/images/Colosseum.jpg',
+        'Itza': '/static/gen/images/chichen.jpg',
+        'Petra': '/static/gen/images/petra.jpeg'
+    }
+
+    names = {
+        'Taj': 'Taj Mahal',
+        'MachuPicchu': 'Machu Picchu',
+        'GreatWall': 'The Great Wall of China',
+        'Christ': 'Christ the Redeemer',
+        'Colosseum': 'Colosseum',
+        'Itza': 'Chichen Itza',
+        'Petra': 'Petra'
+    }
+
+    $('input:radio[name="wonder"]').change(
+        function () {
+            if ($(this).is(':checked')) {
+                // append goes here
+                $('#pageTitle').html(names[localStorage.getItem('bgImg')]);
+            }
+        })
+
+    if (localStorage.getItem('bgImg')) {
+        $('#bdy').css('background', 'url(' + images[localStorage.getItem('bgImg')] + ')');
+        $(':radio').each((ele) => {
+            if ($(':radio')[ele].value == localStorage.getItem('bgImg')) {
+                $(':radio')[ele].checked = true;
+            }
+        });
+        $('#pageTitle').html(names[localStorage.getItem('bgImg')]);
+    }
+
+    function toggle(source) {
+        checkboxes = document.getElementsByName('aspect');
+        for (var i = 0, n = checkboxes.length; i < n; i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+
+
+    $('.wonders').click(function () {
+        name = this.value;
+        localStorage.setItem('bgImg', name);
+        $('#bdy').css('background', 'url(' + images[name] + ')');
+    });
+
+
+</script>
+
+</html>
