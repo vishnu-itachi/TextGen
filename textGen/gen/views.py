@@ -57,7 +57,7 @@ def sample():
         para.append(temp)
 
         paragraph = ''.join(para)
-    time.sleep(2)
+    # time.sleep(2)
     return paragraph
 
 
